@@ -5,11 +5,11 @@ import "goingo/board"
 const size = 9
 
 var turn int
-var goban map[coord]rune
 
 func main() {
-	goban = board.initBoard(size)
-	board.printBoard(goban)
+	goban := make(board.GoBoard, size)
+	goban.New(size)
+	goban.Print()
 	/*moves = make(map[int]*move)
 	turn++
 	moves[turn].player = black
