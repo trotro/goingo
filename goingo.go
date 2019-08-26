@@ -1,33 +1,20 @@
 package main
 
-import "fmt"
+import "goingo/board"
 
 const size = 9
-const moku = '+'
-const white = 'w'
-const black = 'b'
 
-var board [size][size]rune
-
-func init() {
-	for i := 0; i < len(board); i++ {
-		for j := 0; j < len(board); j++ {
-			board[i][j] = moku
-		}
-	}
-}
-
-func printBoard() {
-	fmt.Println("   A  B  C  D  E  F  G  H  I")
-	for i := 0; i < len(board); i++ {
-		fmt.Print(i+1, " ")
-		for j := 0; j < len(board); j++ {
-			fmt.Printf(" %c ", board[i][j])
-		}
-		fmt.Print("\n")
-	}
-}
+var turn int
+var goban map[coord]rune
 
 func main() {
-	printBoard()
+	goban = board.initBoard(size)
+	board.printBoard(goban)
+	/*moves = make(map[int]*move)
+	turn++
+	moves[turn].player = black
+	moves[turn].lon = 'C'
+	moves[turn].lat = 3*/
+	//board.play(goban, moves[turn])
+	//board.printBoard(goban)
 }
