@@ -5,18 +5,17 @@ import (
 	"math"
 )
 
-//Moku is the rune to represent an empty moku on the go board
-const Moku = '+'
-
-//Black is the rune to represent black stones
-const Black = 'b'
-
-//White is the rune to represent white stones
-const White = 'w'
-
-//unexported constants
-const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-const maxSize = 19
+const (
+	//Moku is the rune to represent an empty moku on the go board
+	Moku = '+'
+	//Black is the rune to represent black stones
+	Black = 'b'
+	//White is the rune to represent white stones
+	White = 'w'
+	//unexported constants
+	alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	maxSize  = 19
+)
 
 //Coord is a structure for coordinates on the go board.
 type Coord struct {
@@ -49,6 +48,11 @@ func (goban GoBoard) New(size int) {
 	}
 }
 
+//Size compute the size of the go board like humans do.
+func (goban GoBoard) Size() int {
+	return int(math.Sqrt(float64(len(goban))))
+}
+
 //Play registers a move on the goban
 func (goban GoBoard) Play(m Move) {
 	goban[Coord{m.Loc.Col, m.Loc.Lin}] = m.Player
@@ -56,18 +60,18 @@ func (goban GoBoard) Play(m Move) {
 
 //Print prints the board on stdout.
 func (goban GoBoard) Print() {
-	size := math.Sqrt(float64(len(goban)))
-	fmt.Printf("Goban size : %v \n", int(size))
+	size := goban.Size()
+	//fmt.Printf("Goban size : %v \n", size)
 	fmt.Print("   ")
-	for li := 0; li < int(size)+1; li++ {
+	for li := 0; li < size+1; li++ {
 		if li > 0 {
 			fmt.Print(li, " ")
 		}
 		for c, le := range alphabet {
-			if li == 0 && c < int(size) {
+			if li == 0 && c < size {
 				fmt.Printf("%c", le)
 			}
-			if c >= int(size) {
+			if c >= size {
 				break
 			}
 			fmt.Printf(" %c  ", goban[Coord{le, li}])
