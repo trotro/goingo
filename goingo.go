@@ -10,11 +10,12 @@ func main() {
 	goban := make(board.GoBoard, size)
 	goban.New(size)
 	goban.Print()
-	/*moves = make(map[int]*move)
+	moves := make(map[int]*board.Move)
 	turn++
-	moves[turn].player = black
-	moves[turn].lon = 'C'
-	moves[turn].lat = 3*/
-	//board.play(goban, moves[turn])
-	//board.printBoard(goban)
+	curMove := new(board.Move)
+	curMove.Player = board.Black
+	curMove.Loc = board.Coord{Col: 'C', Lin: 3}
+	moves[turn] = curMove
+	goban.Play(*moves[turn])
+	goban.Print()
 }
