@@ -1,0 +1,24 @@
+@startuml activity
+start
+if (Handicap > 1) then (yes)
+  :White to play;
+else (no)
+  :Black to play;
+endif
+while (Both player passed in the same turn?) is (false)
+  :Player action;
+  if (Surrender?) then (yes)
+    stop
+  else if (Pass?) then (no)
+    while (Play a valid move?) is (false)
+    endwhile (true)
+    :Add new stone;
+    if (Dead stones around?) then (yes)
+      :Remove dead stones;
+    endif
+  endif
+  :Next player;
+endwhile (true)
+:Count points;
+stop
+@enduml
