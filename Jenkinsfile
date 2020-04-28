@@ -1,7 +1,12 @@
 pipeline {
   agent { docker { image 'golang' } }
   stages {
-    stage('version') {
+    stage('Code checkout') {
+      steps {
+        git url: 'https://github.com/trotro/goingo.git'
+      }
+    }
+    stage('go version') {
       steps {
         sh 'go version'
       }
@@ -10,6 +15,13 @@ pipeline {
       steps {
         sh 'go fmt -w'
         sh 'go vet'
+      }
+    }
+    stage('SonarQube analysis') {
+      steps {
+        withSonarQubeEnv('sonarqube_lab') {
+          
+        }
       }
     }
     stage('Test & benchmarks') {
