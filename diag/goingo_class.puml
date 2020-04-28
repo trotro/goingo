@@ -1,0 +1,34 @@
+@startuml class
+
+class board {
+  int size
+  struct position
+  init()
+  play()
+}
+
+class stone {
+  bool color
+}
+
+class position {
+  int xPos
+  int yPos
+}
+
+class player {
+  int score
+  int prisoners
+  bool color
+  string name
+  countScore()
+}
+
+class sgfFile
+
+board -o "0..*" stone
+(stone, board) . position
+player "2" -* board
+sgfFile .o "1..*" board
+
+@enduml
