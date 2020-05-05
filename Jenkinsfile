@@ -1,11 +1,6 @@
 pipeline {
   agent { docker { image 'golang' } }
   stages {
-//    stage('Code checkout') {
-//      steps {
-//        git 'https://github.com/trotro/goingo.git'
-//      }
-//    }
     stage('go version') {
       steps {
         sh 'go version'
