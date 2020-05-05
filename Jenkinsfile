@@ -1,27 +1,11 @@
 pipeline {
   agent { docker { image 'golang' } }
   stages {
-    stage('link repo into $GOPATH') {
-      steps {
-        script {
-          projectName = sh "echo ${env.JOB_NAME} | cut -d/ -f1";
-          echo "projectName var = ${projectName}";
-        }
-        sh "ln -s ${env.WORKSPACE} /go/src/goingo"
-        sh "ls -l /go/src/"
-      }
-    }
     stage('go version') {
       steps {
         sh 'go version'
       }
     }
-    //stage('Format & vet') {
-    //  steps {
-    //    sh 'go fmt .'
-    //    sh 'go vet .'
-    //  }
-    //}
     stage('SonarQube analysis') {
       steps {
         script {
