@@ -1,6 +1,12 @@
 pipeline {
   agent { docker { image 'golang' } }
   stages {
+    stage('link repo into $GOPATH') {
+      steps {
+        sh 'ln -s ${env.WORKSPACE}/${env.JOB_NAME}_${env.BRANCH_NAME} /go/src/${env.JOB_NAME}'
+        sh 'ls -l $GOPATH/'
+      }
+    }
     stage('go version') {
       steps {
         sh 'go version'
@@ -8,7 +14,7 @@ pipeline {
     }
     stage('Format & vet') {
       steps {
-        sh 'pwd && ls -l'
+        sh 'cd $GOPATH/${env.JOB_NAME}'
         sh 'go fmt .'
         sh 'go vet .'
       }
