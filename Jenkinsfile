@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('link repo into $GOPATH') {
       steps {
-        sh "ln -s ${env.WORKSPACE} /go/src/`${env.JOB_NAME} | cut -d/ -f1`"
+        projectName = echo "${env.JOB_NAME} | cut -d/ -f1"
+        sh "ln -s ${env.WORKSPACE} /go/src/${projectName}"
         sh "ls -l /go/src/"
       }
     }
