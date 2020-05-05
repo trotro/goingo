@@ -4,8 +4,8 @@ pipeline {
     stage('link repo into $GOPATH') {
       steps {
         script {
-          projectName = sh "echo ${env.JOB_NAME} | cut -d/ -f1"
-          echo "projectName var = ${projectName}"
+          projectName = sh "echo ${env.JOB_NAME} | cut -d/ -f1";
+          echo "projectName var = ${projectName}";
         }
         sh "ln -s ${env.WORKSPACE} /go/src/goingo"
         sh "ls -l /go/src/"
@@ -16,12 +16,12 @@ pipeline {
         sh 'go version'
       }
     }
-    stage('Format & vet') {
-      steps {
-        sh 'go fmt .'
-        sh 'go vet .'
-      }
-    }
+    //stage('Format & vet') {
+    //  steps {
+    //    sh 'go fmt .'
+    //    sh 'go vet .'
+    //  }
+    //}
     stage('SonarQube analysis') {
       steps {
         script {
