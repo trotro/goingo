@@ -3,7 +3,10 @@ pipeline {
   stages {
     stage('link repo into $GOPATH') {
       steps {
-        sh 'ln -s ${env.WORKSPACE}/${env.JOB_NAME}_${env.BRANCH_NAME} /go/src/${env.JOB_NAME}'
+        sh 'echo ${env.WORKSPACE}'
+        sh 'echo ${env.JOB_NAME}'
+        sh 'echo ${env.BRANCH_NAME}'
+        //sh 'ln -s ${env.WORKSPACE}/${env.JOB_NAME}_${env.BRANCH_NAME} /go/src/${env.JOB_NAME}'
         sh 'ls -l $GOPATH/'
       }
     }
@@ -14,7 +17,7 @@ pipeline {
     }
     stage('Format & vet') {
       steps {
-        sh 'cd $GOPATH/${env.JOB_NAME}'
+        //sh 'cd $GOPATH/${env.JOB_NAME}'
         sh 'go fmt .'
         sh 'go vet .'
       }
