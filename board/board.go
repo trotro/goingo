@@ -19,14 +19,10 @@ const (
 
 //Coord is a structure for coordinates on the go board.
 type Coord struct {
-	xPos rune //column letter
-	yPos int  //line number
-}
-
-//Move is a structure to store moves data : coordinates and player.
-type Move struct {
-	Player rune //player color
-	Loc    Coord
+	//xPos is the column letter
+	xPos rune
+	//yPos is the line number
+	yPos int
 }
 
 //GoBoard is a map to represent the go board.
@@ -54,8 +50,9 @@ func (goban GoBoard) Size() int {
 }
 
 //Play registers a move on the goban
-func (goban GoBoard) Play(m Move) {
-	goban[Coord{m.Loc.xPos, m.Loc.yPos}] = m.Player
+func (goban GoBoard) Play(c Coord, p rune) {
+	//goban[Coord{m.Loc.xPos, m.Loc.yPos}] = m.Player
+	goban[Coord{c.xPos, c.yPos}] = p
 }
 
 //Print prints the board on stdout.
