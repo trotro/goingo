@@ -5,8 +5,9 @@ pipeline {
       steps {
         script {
           projectName = sh "echo ${env.JOB_NAME} | cut -d/ -f1"
+          echo "projectName var = ${projectName}"
         }
-        sh "ln -s ${env.WORKSPACE} /go/src/${projectName}"
+        sh "ln -s ${env.WORKSPACE} /go/src/goingo"
         sh "ls -l /go/src/"
       }
     }
