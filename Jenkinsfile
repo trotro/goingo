@@ -8,6 +8,7 @@ pipeline {
     }
     stage('Format & vet') {
       steps {
+        sh 'pwd && ls -l'
         sh 'go fmt'
         sh 'go vet'
       }
