@@ -5,9 +5,9 @@ pipeline {
       agent any
       steps {
         script {
-          scannerHome = tool 'sonarqube_local_scanner';
+          scannerHome = tool 'sonarqubescanner';
         }
-        withSonarQubeEnv('SonarQube') {
+        withSonarQubeEnv('sonarqube_lab') {
           sh "${scannerHome}/bin/sonar-scanner"
           //sh "/home/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqubescanner/bin/sonar-scanner -Dsonar.host.url=http://192.168.0.14:9000 -Dsonar.projectName=meanstackapp -Dsonar.projectVersion=1.0 -Dsonar.projectKey=meanstack:app -Dsonar.sources=. -Dsonar.projectBaseDir=/home/jenkins/workspace/sonarqube_test_pipeline"
         }
