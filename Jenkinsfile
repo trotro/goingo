@@ -23,10 +23,18 @@ pipeline {
 //      }
 //    }
     stage('go test & benchmarks') {
-      agent { docker { image 'golang' } }
+      agent any
+//      agent { docker { image 'golang' } }
+//      steps {
+//        sh 'go version'
+//        sh 'go test -v --bench . --benchmem --cover'
+//      }
       steps {
-        sh 'go version'
-        sh 'go test -v --bench . --benchmem --cover'
+        docker.image('golang').inside {
+          git 'https://github.com/trotro/goingo.git'
+          sh 'go version'
+          sh 'go test -v --bench . --benchmem --cover'
+        }
       }
     }
   }
