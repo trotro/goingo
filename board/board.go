@@ -17,7 +17,7 @@ const (
 	maxSize  = 19
 )
 
-//Coord is a structure for coordinates on the go board.
+// Coord is a structure for coordinates on the go board.
 type Coord struct {
 	//x is the column letter
 	X rune
@@ -25,10 +25,10 @@ type Coord struct {
 	Y int
 }
 
-//GoBoard is a map to represent the go board.
+// GoBoard is a map to represent the go board.
 type GoBoard map[Coord]rune
 
-//New initializes an empty board of size "size".
+// New initializes an empty board of size "size".
 func (goban GoBoard) New(size int) {
 	if size > maxSize {
 		fmt.Println("Size > 19. The board will default to 19*19.")
@@ -44,18 +44,18 @@ func (goban GoBoard) New(size int) {
 	}
 }
 
-//Size compute the size of the go board like humans do.
+// Size compute the size of the go board like humans do.
 func (goban GoBoard) Size() int {
 	return int(math.Sqrt(float64(len(goban))))
 }
 
-//Play registers a move on the goban
+// Play registers a move on the goban
 func (goban GoBoard) Play(c Coord, p rune) {
 	//goban[Coord{m.Loc.x, m.Loc.y}] = m.Player
 	goban[Coord{c.X, c.Y}] = p
 }
 
-//Print prints the board on stdout.
+// Print prints the board on stdout.
 func (goban GoBoard) Print() {
 	size := goban.Size()
 	//fmt.Printf("Goban size : %v \n", size)

@@ -4,7 +4,7 @@ import "goingo/board"
 
 const size = 9
 
-//Pos is used to represent a new move
+// Pos is used to represent a new move
 type Pos struct {
 	Player rune //player color
 	Loc    board.Coord
