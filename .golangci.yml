@@ -1,0 +1,14 @@
+linters:
+  enable:
+    - govet
+    - unconvert
+    - unparam
+    - gocyclo
+    - revive
+linters-settings:
+  revive:
+    rules:
+      - name: exported
+        disabled: false
+run:
+  timeout: 5m
