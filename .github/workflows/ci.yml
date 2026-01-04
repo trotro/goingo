@@ -3,16 +3,19 @@ name: Go CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of SonarQube reporting
+          fetch-depth: 0
 
       - name: Set up Go
         uses: actions/setup-go@v4
@@ -23,20 +26,23 @@ jobs:
         run: test -z "$(gofmt -l .)" || (echo "Code is not formatted. Please run gofmt." && exit 1)
 
       - name: Lint
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v6
         with:
-          version: v1.59.1
           args: --config=.golangci.yml
 
       - name: Test and coverage
         run: go test -v -coverprofile=coverage.out ./...
 
-      - name: Check test coverage
-        run: |
-          coverage=$(go tool cover -func=coverage.out | grep total: | awk '{print $3}' | sed 's/%//')
-          if (( $(echo "$coverage < 70" | bc -l) )); then
-            echo "Test coverage is below 70% (${coverage}%)"
-            exit 1
-          else
-            echo "Test coverage is sufficient (${coverage}%)"
-          fi
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v3
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.projectKey=github.trotro.goingo
+            -Dsonar.sources=.
+            -Dsonar.tests=.
+            -Dsonar.test.inclusions=**/*_test.go
+            -Dsonar.exclusions=**/*_test.go,**/vendor/**
+            -Dsonar.go.coverage.reportPaths=coverage.out
